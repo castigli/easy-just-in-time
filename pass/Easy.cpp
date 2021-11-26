@@ -145,10 +145,10 @@ namespace easy {
 
         std::string Reason;
         if(!canExtractBitcode(GO, Reason)) {
-          DEBUG(dbgs() << "Could not extract global '" << GO.getName() << "'. " << Reason << "\n");
+          LLVM_DEBUG(dbgs() << "Could not extract global '" << GO.getName() << "'. " << Reason << "\n");
           continue;
         }
-        DEBUG(dbgs() << "Global '" << GO.getName() << "' marked for extraction.\n");
+        LLVM_DEBUG(dbgs() << "Global '" << GO.getName() << "' marked for extraction.\n");
 
         ObjectsToJIT.push_back(&GO);
       }
@@ -299,7 +299,7 @@ namespace easy {
     }
 
     static GlobalVariable* embedBitcode(Module &M, GlobalObject& GO) {
-      std::unique_ptr<Module> Embed = CloneModule(&M);
+      std::unique_ptr<Module> Embed = CloneModule(M);
 
       GlobalValue *FEmbed = Embed->getNamedValue(GO.getName());
       assert(FEmbed && "global value with that name exists");
@@ -314,7 +314,7 @@ namespace easy {
     static std::string moduleToString(Module &M) {
       std::string s;
       raw_string_ostream so(s);
-      WriteBitcodeToFile(&M, so);
+      WriteBitcodeToFile(M, so);
       so.flush();
       return s;
     }

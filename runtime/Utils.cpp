@@ -57,7 +57,7 @@ easy::CloneModuleWithContext(llvm::Module const &LM, llvm::LLVMContext &C) {
   // write module
   {
     llvm::raw_string_ostream stream(buf);
-    llvm::WriteBitcodeToFile(&LM, stream);
+    llvm::WriteBitcodeToFile(LM, stream);
     stream.flush();
   }
 
